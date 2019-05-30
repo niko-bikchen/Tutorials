@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue JS</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <div id="vue-app">
+        <h1>Conditionals</h1>
+        <button v-on:click="error = !error">Toggle Error</button>
+        <button v-on:click="success = !success">Toggle Success</button>
+        <!-- If false will be removed from DOM -->
+        <!-- <p v-if="error">There has been an error</p>
+        <p v-else-if="success">There has been a success</p> -->
+        <!-- If false will be displayed none -->
+        <p v-show="error">An error occurred</p>
+        <p v-show="success">An success occurred</p>
+
+    </div>
+    <script src="app.js"></script>
+</body>
+
+</html>

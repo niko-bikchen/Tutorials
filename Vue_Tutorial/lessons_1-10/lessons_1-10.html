@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue JS</title>
+    <link rel="stylesheet" href="lessons_1-10_styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+
+<body>
+    <!-- Root element. Everything is rendered here. Under control of the vue instance. -->
+    <div id="vue-app">
+        <!-- DYNAMIC CONTENT -->
+        <h1 style="color: green">DYNAMIC CONTENT</h1>
+
+
+        <!-- Vue instance, which controls that elem., will insert corresponding values from the data prop. of the object passed to its constructor -->
+        <h3>{{ greet('afternoon') }}</h3> <!-- Using methods from methods prop in Vue instance -->
+        <p>{{ name }}</p> <!-- RENDERS AS A STRING -->
+        <p>Job: {{ job }}</p>
+        <!--
+            How it works:
+                Vue JS takes our HTML, creates a template from it in JavaScript format, attaches data if needed, builds and renders HTML.
+        -->
+
+        <!-- DATA BINDING -->
+        <h1 style="color: green">DATA BINDING</h1>
+
+        <a v-bind:href="website">Website</a>
+        <!-- v-bind <= directive, instruction for Vue to do smt. v-bind => binds to attr -->
+        <a :href="website">Website</a> <!-- Same stuff -->
+        <!-- Can bind to any attribute -->
+        <input type="text" v-bind:value="name">
+        <!-- Bind html code -->
+        <p v-html="websiteTag"></p> <!-- It says: "Inside a <p> tag I want to have html" -->
+
+        <!-- EVENTS 'N STUFF -->
+        <h1 style="color: green">EVENTS 'N STUFF</h1>
+
+        <p>My age is {{ age }}</p>
+        <!-- v-on => another directive, listens for the specified event -->
+        <!-- Stuff in the breckets of v-on will be executed as soon as the event occurrs  -->
+        <button v-on:click="age++">Add a year</button>
+        <button v-on:click="age--">Subtract a year</button>
+        <button v-on:click="add()">Add a year using a method</button>
+        <button v-on:click="subtract()">Subtract a year using a method</button>
+        <!-- We don't obliged to always put () as Vue expects code to execute, and the code can be either hardcoded or be inside the function -->
+        <!-- We putted () as we modified add and subtract functions so that they can receive values -->
+        <!-- dblclick => double click event-->
+        <button v-on:dblclick="add(10)">Double click to add 10 years</button>
+        <button v-on:dblclick="subtract(10)">Double click to subtract 10 years</button>
+        <!-- Same stuff -->
+        <button @dblclick="subtract(10)">A special button</button>
+        <!-- mousemove fires when mouse moves -->
+        <div id="canvas" v-on:mousemove="updateCoords">({{ x }}, {{ y }})</div>
+
+        <h1 style="color: green">EVENT MODIFIERS</h1>
+
+        <button v-on:click.once="add()">Add a year using a method ONCE</button>
+        <a v-on:click.prevent="click" href="http://www.thenetninja.co.uk/">A website, again</a>
+
+        <h1 style="color: green">KEYBOARD EVENTS</h1>
+
+        <label>Name: </label>
+        <!-- Keyup is fired only after pressing enter -->
+        <input type="text" v-on:keyup.enter="logName">
+        <label>Age: </label>
+        <!-- Keyup is fired only after pressing alt + enter -->
+        <input type="text" v-on:keyup.alt.enter="logAge">
+
+        <h1 style="color: green">2-WAY DATA BINDING</h1>
+
+        <label>Name: </label>
+        <!-- v-model <= attaches the val of the input to the given prop of the Vue instance -->
+        <!-- When we enter smt in input Vue will see that name var is assocciated with the input and will update its value -->
+        <!-- ALSO {{ name }} will be updated in the browser (goes back and forth (2-way data binding))-->
+        <input type="text" v-model="realName">
+        <span>{{ realName }}</span>
+        <label>Age: </label>
+        <input type="text" v-model="realAge">
+        <span>{{ realAge }}</span>
+
+        <h1 style="color: green">COMPUTED PROPERTIES</h1>
+
+        <button v-on:click="a++">Add to A</button>
+        <button v-on:click="b++">Add to B</button>
+        <p>A - {{ a }}</p>
+        <p>B - {{ b }}</p>
+        <!-- Computed props. We are using computed props instead of methods (changed addToA() to addToA) -->
+        <p>Age + A = {{ addToA }}</p>
+        <p>Age + B = {{ addToB }}</p>
+        <!-- Every time a or b changes Vue JS is gonna look at functions (addToA and addToB) and run them !both! even only one of them should be run -->
+        <!-- This is not very efficient, so let's use computed variables -->
+
+        <h1 style="color: green">DYNAMIC CSS</h1>
+
+        <h2>Example 1</h2>
+        <!-- available refers to the Vue instance data -->
+        <div v-on:click="available = !available" v-bind:class="{available: available}">
+            <span>Ryu</span>
+        </div>
+        <h2>Example 2</h2>
+        <button v-on:click="nearby = !nearby">Toggle nearby</button>
+        <button v-on:click="available = !available">Toggle available</button>
+        <div v-bind:class="compClasses">
+            <span>Ryu</span>
+        </div>
+
+    </div>
+    <!-- {{sum_stuff}} <= Vue js won't pay attention to this while rendering the page as it is outside the element which the Vue controls -->
+    <script src="lessons_1-10_app.js"></script>
+</body>
+
+</html>
