@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- Viewport provides proper rendering and touch zooming on mobile devices -->
+    <!-- Can be disabled by appending user-scalable=no in the content -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chapter 2</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="base.css">
+</head>
+
+<body>
+    <!-- <h> tags are very importatn for SEO (search engine optimization). So it's important not to miss <h> levels -->
+
+    <div class="container">
+        <div class="jumbotron">
+            <div class="container">
+                <div class="row">
+                    <header class="col-md-12">
+                        <h1>A simple landing page example</h1>
+                        <h2>Sub title for support</h2>
+                        <a href="#" class="btn btn-primary btn-lg" role="button">Link</a>
+                    </header>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-4 col-md-4 col-sm-6 order-md-2">
+                <h3 class="h4">Some text with <small>secondary text</small></h3>
+            </div>
+            <div class="col-md-4 col-sm-6 order-md-1">
+                <h3 class="h4">
+                    Add to your favourites
+                    <small>
+                        <kbd class="nowrap"><kbd>ctrl</kbd> + <kbd>d</kbd></kbd>
+                    </small>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-xs-5">
+                <!-- pre-scrollable class adds scroll if the snippet is too big -->
+                <pre>
+                    <code>
+&lt;p&gt;I love programming!&lt;/p&gt;
+&lt;p&gt;This paragraph is on my landing page&lt;/p&gt;
+&lt;br/&gt;
+&lt;br/&gt;
+&lt;p&gt;Bootstrap by example&lt;/p&gt;
+                    </code>
+                </pre>
+            </div>
+            <div class="col-md-8 col-7" style="overflow: hidden; height: 120px;">
+                <!-- img-responsive class makes image responsive to the viewport -->
+                <img src="img/spring_is_coming_by_andreasrocha-dc75x2t.jpg" class="img-responsive d-none d-sm-block">
+                <img src="img/as.png" class="img-responsive d-block d-sm-none">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3 col-sm-3 d-none d-sm-block" style="overflow: hidden; height: 170px;"><img
+                    src="img/the_hidden_village_by_andreasrocha-d9apncz.jpg" class="img-responsive"></div>
+            <div class="col-md-6 col-11 col-sm-6">
+                <blockquote class="blockquote text-center">
+                    <p>
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Beatae repellat omnis officiis
+                        nesciunt sunt eum neque, possimus labore doloribus quam obcaecati aliquam ullam quos nam fuga?
+                        Iste
+                        autem enim nesciunt.
+                    </p>
+                    <footer class="blockquote-footer">
+                        Testimonial from someone at <cite title="Source Title">Source Title</cite>
+                    </footer>
+                </blockquote>
+            </div>
+            <div class="col-md-3 col-7 col-sm-3" style="overflow: hidden; height: 170px;"><img
+                    src="img/the_hidden_village_by_andreasrocha-d9apncz.jpg" class="img-responsive"></div>
+            <div class="col-md-3 col-5 d-block d-sm-none" style="overflow: hidden; height: 170px;"><img
+                    src="img/the_hidden_village_by_andreasrocha-d9apncz.jpg" class="img-responsive"></div>
+        </div>
+        <div class="row">
+            <!-- text-* aligns text in the paragraph as specified by * -->
+            <div class="col-md-3">
+                <p class="text-left"><code>&lt;Left&gt;</code></p>
+            </div>
+            <div class="col-md-3">
+                <p class="text-center"><code>&lt;Center&gt;</code></p>
+            </div>
+            <div class="col-md-3">
+                <p class="text-justify"><code>&lt;Justify&gt;</code></p>
+            </div>
+            <div class="col-md-3">
+                <p class="text-right"><code>&lt;Right&gt;</code></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <h3>Lowercase</h3>
+                <p class="text-lowercase">
+                    Lorem ipsum dolor ... consequat.
+                </p>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Uppercase</h3>
+                        <p class="text-uppercase">
+                            Lorem ipsum dolor ... consequat.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Capitalize</h3>
+                        <p class="text-capitalize">
+                            Lorem ipsum dolor ... consequat.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <h3>Strong and italic</h3>
+                <p>
+                    <strong>Lorem ipsum</strong> dolor ... <em>consequat</em>.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th class="table-success">
+                                <h4 class="text-center">Free plan</h4>
+                            </th>
+                            <th class="table-info">
+                                <h4 class="text-center">Standard plan</h4>
+                            </th>
+                            <th class="table-danger">
+                                <h4 class="text-center">Premium plan</h4>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <h3 class="text-center">$ 0</h3>
+                            </td>
+                            <td>
+                                <h3 class="text-center">$ 99</h3>
+                            </td>
+                            <td>
+                                <h3 class="text-center">$ 999</h3>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum</td>
+                            <td>Lorem ipsum</td>
+                            <td>Lorem ipsum</td>
+                        </tr>
+                        <tr>
+                            <td>Lorem ipsum</td>
+                            <td>Lorem ipsum</td>
+                            <td>Lorem ipsum</td>
+                        </tr>
+                        <tr>
+                            <td>Dolor sit amet</td>
+                            <td>Lorem ipsum</td>
+                            <td>Lorem ipsum</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>Dolor sit amet</td>
+                            <td>Lorem ipsum</td>
+                        </tr>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>Lorem ipsum</td>
+                        </tr>
+                        <tr>
+                            <td><a href="#" class="btn btn-success btn-block">Purchase</a></td>
+                            <td><a href="#" class="btn btn-info btn-block">Purchase</a></td>
+                            <td><a href="#" class="btn btn-danger btn-block">Purchase</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <footer class="row jumbotron">
+            <div class="col-md-2" style="overflow: hidden; height: 120px;">
+                <img src="img/spring_is_coming_by_andreasrocha-dc75x2t.jpg" class="img-responsive">
+            </div>
+            <div class="col-md-7">
+                <ul class="list-inline list-unstyled">
+                    <li class="list-inline-item"><a href="#">Documentation</a></li>
+                    <li class="list-inline-item"><a href="#">Packt publisher</a></li>
+                    <li class="list-inline-item"><a href="#">Twitter</a></li>
+                    <li class="list-inline-item"><a href="#">Bootstrap</a></li>
+                    <li class="list-inline-item"><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <div class="col-md-3">
+                <address>
+                    <strong>Name, Inc.</strong><br>
+                    Address line 1<br>
+                    Address line 2<br>
+                    <abbr title="Phone">P:</abbr> (123) 456-7890
+                </address>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+</body>
+
+</html>
