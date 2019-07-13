@@ -1,0 +1,15 @@
+{
+  "name": "gulpbasics",
+  "version": "1.0.0",
+  "description": "Learning to use gulp together with SASS, Compass",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-compass": "^2.1.0"
+  }
+}

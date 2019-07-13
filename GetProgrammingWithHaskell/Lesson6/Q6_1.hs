@@ -1,0 +1,1 @@
+myRepeat val = cycle (val:[])

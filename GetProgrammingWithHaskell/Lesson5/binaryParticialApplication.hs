@@ -1,0 +1,1 @@
+binaryParticialAppliation function n = (\m -> function n m)

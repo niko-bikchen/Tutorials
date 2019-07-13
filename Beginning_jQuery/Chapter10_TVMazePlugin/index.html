@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Chap. 10 | TVMaze Plugin</title>
+    <script src="../jQuery/jquery-3.4.1.min.js" defer></script>
+    <script src="./tvmaze.jquery.js" defer></script>
+    <script src="./app.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1> TV Maze – TV Show Search </h1>
+        <form>
+            <div class="form-group">
+                <input type="text" class="form-control" id="showInput" placeholder="Search TV
+                Show" required>
+                <button type="submit" class=" btn btn-primary" id="submitButton">Submit</button>
+                </dir>
+        </form>
+    </div>
+    <div>
+        <table class="table">
+            <thead id="tableHead">
+                <tr>
+                    <td>Name</td>
+                    <td>Network</td>
+                    <td>Type</td>
+                    <td>Image</td>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+            </tbody>
+        </table>
+        <table class="table">
+            <thead>
+                <tr>
+                    <td>Airdate</td>
+                    <td>Episode Name</td>
+                    <td>Episode Number</td>
+                    <td>Season</td>
+                    <td>Run Time</td>
+                    <td>Summary</td>
+                </tr>
+            </thead>
+            <tbody id="episodeInfo">
+            </tbody>
+        </table>
+    </div>
+    </div>
+</body>
+
+</html>

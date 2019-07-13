@@ -1,5 +1,15 @@
 $(function () {
-    $("h5").on("click", function () {
-        $("div").stop(true, true).fadeToggle(500);
+    $.ajax({
+        url: './sample.json',
+        type: 'get',
+        dataType: 'json'
+    }).done(function (result) {
+        console.log(result);
+    }).fail(function (error) {
+        console.log('Oops', error);
+    });
+
+    $.getJSON('./sample.json', function (data) {
+        console.log(data);
     });
 });
