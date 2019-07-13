@@ -1,0 +1,49 @@
+#slider {
+    width: 300px;
+    height: 400px;
+
+    overflow: hidden;
+}
+
+#slider ul {
+    width: 1500px;
+    height: 300px;
+
+    margin: 0;
+    padding: 0;
+
+    list-style: none;
+}
+
+#slider ul li {
+    float: left;
+
+    width: 300px;
+    height: 300px;
+}
+
+.button {
+    display: block;
+
+    margin: 10px 0 0 0;
+    padding: 6px;
+
+    border: 1px solid #cccccc;
+
+    text-align: center;
+    font-size: 14px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.prev,
+.next {
+    width: 100px;
+}
+
+.prev {
+    float: left;
+}
+
+.next {
+    float: right;
+}
