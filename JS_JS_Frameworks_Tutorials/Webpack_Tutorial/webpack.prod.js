@@ -9,14 +9,17 @@ var HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = merge(common, {
     mode: "production",
+    devtool: "source-map",
     output: {
         filename: "[name].[contentHash].bundle.js",
         path: path.resolve(__dirname, "dist")
     },
     optimization: {
         minimizer: [
-            new OptimizeCssAssetsPlugin(),
-            new TerserPlugin(),
+            new OptimizeCssAssetsPlugin({ cssProcessorOptions: { map: { inline: false, annotation: true } } }),
+            new TerserPlugin({
+                sourceMap: true
+            }),
             new HtmlWebpackPlugin({
                 template: "./src/template.html",
                 minify: {
@@ -37,8 +40,8 @@ module.exports = merge(common, {
                 test: /\.scss$/,
                 use: [
                     MiniCssExtractPlugin.loader, // 3. Extract css into files
-                    "css-loader", // 2. Turn css into commonjs
-                    "sass-loader" // 1. Turn sass into css
+                    { loader: 'css-loader', options: { sourceMap: true } }, // 2. Turn css into commonjs
+                    { loader: 'sass-loader', options: { sourceMap: true } } // 1. Turn sass into css
                 ]
             }
         ]

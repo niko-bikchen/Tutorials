@@ -5,5 +5,6 @@ import "./main.scss";
 
 const alertService = new AlertService();
 const componentService = new ComponentService();
+console.log("Hello from index.js 8:36");
 
 run(alertService, componentService);
