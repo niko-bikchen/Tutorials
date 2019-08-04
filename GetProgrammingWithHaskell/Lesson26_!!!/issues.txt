@@ -1,0 +1,2 @@
+getDirectoryLength :: MarcLeaderRaw -> Int
+getDirectoryLength leader = getBaseAddress leader - ??? (leaderLength + 1) ???

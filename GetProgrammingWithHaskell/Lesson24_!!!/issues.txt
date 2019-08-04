@@ -1,0 +1,2 @@
+Cannot read args from commandline
+SOLVED: Arguments should be passed like 'start program.exe args'
