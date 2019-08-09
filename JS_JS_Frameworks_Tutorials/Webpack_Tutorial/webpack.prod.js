@@ -11,8 +11,9 @@ module.exports = merge(common, {
     mode: "production",
     devtool: "source-map",
     output: {
-        filename: "[name].[contentHash].bundle.js",
-        path: path.resolve(__dirname, "dist")
+        filename: "[name].[contentHash].bundle.js"  ,
+        path: path.resolve(__dirname, "dist"),
+        chunkFilename: '[name].[chunkHash].bundle.js'
     },
     optimization: {
         minimizer: [
@@ -28,7 +29,18 @@ module.exports = merge(common, {
                     removeComments: true
                 }
             })
-        ]
+        ],
+        runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    enforce: true,
+                    chunks: 'all'
+                }
+            }
+        }
     },
     plugins: [
         new MiniCssExtractPlugin({ filename: "[name].[contentHash].css" }),
