@@ -2,7 +2,7 @@ var path = require('path')
 var webpack = require('webpack')
 
 module.exports = {
-  entry: './src/dynamic_components/main.js',
+  entry: './src/task_code/main.js',
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
