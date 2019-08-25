@@ -1,0 +1,4 @@
+Vue js makes template out of our html, than takes it, renders it 
+and in this way creates a real html which is renered to the DOM
+=====
+Directive is an instruction for Vue in your code

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sec. 3</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <div id="app">
+        <ul>
+            <!-- v-for repeats elements it "sits" on -->
+            <!-- index is index of an element, nothing special -->
+            <!-- ! ingridient is a variable Vue creates for us -->
+            <li v-for="(ingridient, index) in ingridients" :key="index">
+                {{ ingridient }} ({{ index }})
+            </li>
+        </ul>
+        <button @click="ingridients.push('spices')">Add new</button>
+        <!-- Using template with v-for.-->
+        <hr>
+        <template v-for="(ingridient, index) in ingridients">
+            <p>{{ ingridient }} ({{ index }})</p>
+        </template>
+        <hr>
+        <ul>
+            <li v-for="(person, index) in persons" :key="index">
+                <h3>{{ person.name }}</h3>
+                <!-- Looping through object props -->
+                <span v-for="(value, key, index) in person">
+                    {{ key }}: {{ value }} ({{ index }})<br />
+                </span>
+            </li>
+        </ul>
+        <hr>
+        <!-- Outputing numbers from 1 to 10 -->
+        <span v-for="n in 10"> {{ n }}</span>
+        <hr>
+
+    </div>
+
+    <script src="../../vendor/vue.js"></script>
+    <script src="./app.js"></script>
+</body>
+
+</html>

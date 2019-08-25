@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sec. 3</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <div id="app">
+        <!-- If v-if directive is true it completely removes the element from the DOM
+        leaving only comment after it-->
+        <!-- ! Removes all nested elements as well -->
+        <!-- ? v-if can be better for perfomance as less elemenst in the DOM
+             ? better perfomance -->
+        <p v-if="show">Country road</p>
+        <!-- "Binds" to the latest v-if. Works like ordonary else statmet -->
+        <!-- ! Since Vue.js version >= 2.1 you can use v-else-if -->
+        <p v-else>West Virginia</p>
+        <p>Take me home</p>
+        <!-- template tag is not rendered into the DOM, only its contents 
+        but we can use v-if with it to hide nested elements.
+        Template can be used to group elements as it doesn't have any side effects-->
+        <template v-if="show">
+            <p>To the place I belong</p>
+        </template>
+        <!-- Works like v-if but doesn't removes element from the DOM,
+        only sets display prop to none -->
+        <p v-show="show">Mountain mama</p>
+        <button @click="show = !show">Toggle show</button>
+    </div>
+
+    <script src="../../vendor/vue.js"></script>
+    <script src="./app.js"></script>
+</body>
+
+</html>

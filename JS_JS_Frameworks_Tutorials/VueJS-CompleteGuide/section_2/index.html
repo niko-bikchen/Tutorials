@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sec. 2</title>
+    <script src="../../vendor/vue.js" defer></script>
+    <script src="./app.js" defer></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- * When the data value chages everything which uses this data 
+             * is re-rendered when it is changed. By using "v-once" we prevent
+             * this -->
+        <p v-once>{{ title }}</p>
+        <!-- ! Doesn't work when changing title in sayHello() function -->
+        <!-- <input type="text" v-on:input="changeTitle"> -->
+        <!-- * When Vue renders our template  it will "parse" interpolation thus calling the function-->
+        <!-- * Important point is that function must return smt which can be converted to a String / outputed -->
+        <p>{{ sayHello() }}</p>
+        <!-- * Won't work. Since {{}} can be used in attr we use data binding -->
+        <!-- * Binding attr. Tells vue "Bind smt to my data in vue instance" -->
+        <a v-bind:href="link">Google</a>
+        <hr>
+        <!-- * By default Vue JS escapes html thus it only renders text, thus it won't work -->
+        {{ finishedLink }}
+        <!-- * v-html tells Vue to render html and not to escape it -->
+        <!-- ! Use carefully -->
+        <p v-html="finishedLink"></p>
+    </div>
+</body>
+
+</html>

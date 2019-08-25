@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sec. 1</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ title }}</p>
+        <!-- Vue directive. The instruction Vue recognizes -->
+        <!-- Syntax - directive:argument="value" -->
+        <input type="text" v-on:input="changeTitle">
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+        // Creating a Vue object
+        // New vue instance, a core of each vue application.
+        // Their job is to control the html template which they render to the screen
+        new Vue({
+            el: '#app', // Points to the part of html which Vue instance controls.
+            data() {
+                return {
+                    title: 'Hello World'
+                }
+            },
+            // All methods we want use in the template or in the Vue instance.
+            methods: {
+                changeTitle(event) {
+                    // Vue proxies all data props to the top Vue object
+                    this.title = event.target.value;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

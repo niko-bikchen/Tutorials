@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sec. 3</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+
+<body>
+    <div id="exercise">
+        <!-- 1) Hook up the button to toggle the display of the two paragraphs. Use both v-if and v-show and inspect the elements to see the difference -->
+        <div>
+            <button @click="show = !show">Toggle</button>
+            <p v-if="show">You either see me ...</p>
+            <p v-else>...or me</p>
+            <p v-show="show">You either see me ...</p>
+            <p>...or me</p>
+        </div>
+        <hr>
+        <!-- 2) Output an <ul> of array elements of your choice. Also print the index of each element. -->
+        <ul>
+            <li v-for="(item, index) in array" :key="item">{{ index }}.{{ item }}</li>
+        </ul>
+        <hr>
+        <!-- 3) Print all key-value pairs of the following object: {title: 'Lord of the Rings', author: 'J.R.R. Tolkiens', books: '3'}. Also print the index of each item. -->
+        <ul>
+            <li v-for="(value, key, index) in myObject" :key="key">
+                {{ index }}) {{ key }}: {{ value }}
+            </li>
+        </ul>
+        <hr>
+        <!-- 4) Print the following object (only the values) and also create a nested loop for the array: {name: 'TESTOBJECT', data: [1.67, 1.33, 0.98, 2.21]} (hint: use v-for and v-if to achieve this) -->
+        <ul>
+            <template v-for="(value, key) in testData">
+                <li v-if="key != 'data'">
+                    {{ key }}: {{ value }}
+                </li>
+                <li v-else>
+                    <span v-for="(item, index) in value" :key="item">
+                        {{ index == (value.length - 1) ? item : item + ', '}}
+                    </span>
+                </li>
+            </template>
+        </ul>
+    </div>
+
+    <script src="../../vendor/vue.js"></script>
+    <script src="./app.js"></script>
+</body>
+
+</html>

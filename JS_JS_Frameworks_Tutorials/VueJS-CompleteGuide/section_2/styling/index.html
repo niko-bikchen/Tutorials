@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sec. 2</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="../../vendor/vue.js" defer></script>
+    <script src="./app.js" defer></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- :class expects a js object like "class name": "boolean", where if boolean
+        is true vue js merge this class and the existing class property or create class
+        attr with this -->
+        <!-- <div class="demo" @click="attachRed = !attachRed" :class="{red: attachRed}"></div> -->
+        <!-- Here we are using computed property which returns an object -->
+        <div class="demo" @click="attachRed = !attachRed" :class="divClasses"></div>
+        <!-- Applying styles directly to style prop 'background-color' == 'backgroundColor'
+        :style can also be equal to the object coming from vue instance-->
+        <div class="demo" :style="myStyle"></div>
+        <div class="demo" :style="{'background-color': color, fontSize: '20px'}">Hello</div>
+        <!-- You can also attach classes directly like :class="value which resolves to the class name"
+        or by passing an array of classes, all of which will be merged into class attr -->
+        <div class="demo" :class="[color, {red: attachRed}, 'pink']"></div>
+        <div class="demo" :style="[myStyle, {height: width + 'px'}]"></div>
+        <hr>
+        <input type="text" v-model="color">
+        <input type="number" v-model="width">
+    </div>
+</body>
+
+</html>

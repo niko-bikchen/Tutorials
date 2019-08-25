@@ -1,0 +1,7 @@
+Use Vue.component('selector', {...Configuration object...}) to register component globally
+Use components prop in Vue instance to register component locally in a Vue instance
+components: {
+    'selector': {
+        ...Configuration object...
+    }
+}

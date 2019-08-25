@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Monster Slayer</title>
+    <link rel="stylesheet" href="css/foundation.min.css">
+    <link rel="stylesheet" href="css/app.css">
+</head>
+
+<body>
+    <div id="app">
+
+        <section class="row">
+            <div class="small-6 columns">
+                <h1 class="text-center">YOU</h1>
+                <div>
+                    <div class="healthbar healthbar_me text-center" :style="{width: playerHealth + '%'}">
+                        {{ playerHealth }}
+                    </div>
+                </div>
+            </div>
+            <div class="small-6 columns">
+                <h1 class="text-center">MONSTER</h1>
+                <div>
+                    <div class="healthbar healthbar_monster text-center" :style="{width: monsterHealth + '%'}">
+                        {{ monsterHealth }}
+                    </div>
+                </div>
+            </div>
+            <div class="small-12 columns game-result" v-if="gameIsEnded">
+                <p class="game-winner" v-if="gameWinner == 'Player'">Player is a winner!</p>
+                <p class="game-winner" v-else>Monster is a winner!</p>
+            </div>
+        </section>
+
+        <section class="row controls">
+            <div class="small-12 columns">
+                <button id="start-game" @click="startGame()" :disabled="gameIsOn">START NEW
+                    GAME</button>
+            </div>
+        </section>
+
+        <section class="row controls">
+            <div class="small-12 columns">
+                <button id="attack" :disabled="!gameIsOn" @click="playerAttack()">ATTACK</button>
+                <button id="special-attack" :disabled="!gameIsOn" @click="playerSpecialAttack()">SPECIAL ATTACK</button>
+                <button id="heal" :disabled="!gameIsOn" @click="playerHeal()">HEAL</button>
+                <button id="give-up" :disabled="!gameIsOn" @click="giveUp()">GIVE UP</button>
+            </div>
+        </section>
+
+        <section class="row log">
+            <div class="small-12 columns">
+                <ul>
+                    <li :class="turnStyle" v-for="(log, index) in battleLog" :key="index">
+                        {{ log }}
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+    <script src="../vendor/vue.js"></script>
+    <script src="./scripts/app.js"></script>
+</body>
+
+</html>

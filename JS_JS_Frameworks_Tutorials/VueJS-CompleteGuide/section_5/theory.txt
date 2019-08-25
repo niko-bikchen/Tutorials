@@ -1,0 +1,32 @@
+Vue instance acts like a middle man between DOM and our business logic
+We pack all our business logic in the Vue instance be that methods, data, etc.
+
+$el - refers to our template / html code (elemetn)
+$data - holds data props
+
+Vue takes html it controls and creates a template internally, turns it into js as it more
+easier to traverse through js than original DOM. So it will be able to update it and write
+this template to the DOM we see in the browser.
+
+Vue js has 2 compilers : one in the browser, which supports out templates no matter if we use the template prop or el prop
+It has to respect some DOM limitations like case-insensetive name of element selectors.
+And another version with a stripped-out compiler which we use during the build process.
+
+For every object prop Vue creates a watcher. When updated Vue doesn't re-render actual DOM, but virtual,
+which is a copy of an actual DOM but turned into js code for better perfomance and traversing. Then Virtual DOM checks 
+diffs between Vue instance template, specified via 'el' or 'template' prop, for example, and virtual DOM
+(since template contains the newest data it makes sense) re-renders actual DOM only in places 
+that are different between virtual DOM and template.
+
+Vue instance lifecycle consists of:
+    • new Vue({...}) - start the lifecycle
+    • beforeCreate() - before instance creted
+    • Initialize data and events we pass to the object
+    • created() - the instance is created
+    • Compile given template or the one derived from 'el'. Compile - do smt with {{}} and directives, etc.
+    • beforeMount() - before the template is written to the real DOM
+    • Replace 'el' with the compiled template
+    • * => Mounted to DOM => Data changed => beforeUpdate() => Re-render DOM => updated() => *
+    • beforeDestroy()
+    • Destroyed
+    • destroyed()

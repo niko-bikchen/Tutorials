@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sec. 2</title>
+    <script src="../../vendor/vue.js" defer></script>
+    <script src="./app.js" defer></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Passing args to the event handlers -->
+        <!-- * $event stores event object in case we want to pass smt and the event to the function-->
+        <button v-on:click="increase(2, $event)">Click me</button>
+        <p>{{ counter }}</p>
+        <p v-on:mousemove="updateCoords">
+            x: {{ x }}, y: {{ y }}
+            <br>
+            <!-- ! Temporary decision to prevent event from propagating thus not triggering mousemove on span -->
+            <!-- <span v-on:mousemove="dummy">= DEAD ZONE =</span> -->
+            <!-- * .stop - modifier which stops event propagation 
+                 * .prevent - similar to event.preventDefault() -->
+            <span v-on:mousemove.stop="">= DEAD ZONE =</span>
+            <input type="text" v-on:keyup.enter.space="alertMe">
+        </p>
+    </div>
+</body>
+
+</html>
