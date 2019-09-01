@@ -1,0 +1,10 @@
+Directives hooks: 
+1. bing (el, binding, vnode); Fired as soon as the directive is bound to the element
+    el - element to which the directive is binded
+    binding - args, modifiers, etc. passed to directive
+    vnode - refers to the node in the virtual DOM
+2. inserted (el, binding, vnode); Fired as soon as it is inserted in the DOM
+3. updated (el, binding, vnode, oldVnode); Fired when the component updates (without children)
+    oldVnode - old node in the DOM
+4. componentUpdated (el, binding, vnode, oldVnode); Fired when the component updates (with children)
+5. unbind (el, binding, vnode); Fired once the directive is removed

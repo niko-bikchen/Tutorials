@@ -1,0 +1,5 @@
+Transition JS Hooks
+Element appears: 
+    • before-enter => enter => after-enter => after-enter-cancelled
+Element vanishes:
+    • before-leave => leave => after-leave => after-leave-cancelled

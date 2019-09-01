@@ -1,0 +1,5 @@
+Filter - a syntax, feature that you can use to transform output in the template 
+(doesn't transform data, transforms only what the user sees)
+Vue doesn't ship with built in filters
+
+Mixins - used to outsource duplicated code to a separate file and include it in Vue instances

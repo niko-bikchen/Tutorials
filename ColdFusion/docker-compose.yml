@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  # CFML Engine
+  cfml:
+    image: ortussolutions/commandbox
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./www:/app
+    environment:
+      cfconfig_adminPassword: 12345
+    #command: "/bin/sh -c 'cd /app && box install; $BUILD_DIR/run.sh'"
