@@ -42,8 +42,8 @@ union xs ys = set (merge xs ys)
 -- Task 7 -----------------------------------------
 intersection :: [Int] -> [Int] -> [Int]
 intersection [] [] = []
-intersection xs [] = xs
-intersection [] ys = ys
+intersection xs [] = []
+intersection [] ys = []
 intersection xs ys = set ([x | x <- xs, x `elem` ys])
 
 -- Task 8 -----------------------------------------
