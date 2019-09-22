@@ -36,7 +36,7 @@
         </transition>
 
         <!--  
-          By default length of the animation is dicatated by the longest animation
+          By default length of the animation is dictated by the longest animation
           thus when you have animation and transition together you should specify type
           to tell who dictates the animation so it could be smooth
         -->
@@ -55,7 +55,7 @@
         </transition>
 
         <!-- 
-          We use key since vue doesn't know the difference between elements whic is neccessary to attach classes
+          We use key since vue doesn't know the difference between elements which is neccessary to attach classes
           and only swaps the contents instead of animating.
           Mode: 
             • out-in: Let the old element animate out and only then animate the new one
