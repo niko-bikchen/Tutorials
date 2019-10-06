@@ -21,8 +21,8 @@ isTournament graph =
 
 -- Task 3 ------------------------------------
 isTransitive :: Graph -> Bool
-isTransitive [] = False
-isTransitive [[]] = False
+isTransitive [] = True
+isTransitive [[]] = True
 isTransitive graph =
   foldl
     (&&)
@@ -35,10 +35,13 @@ isTransitive graph =
 
 -- Task 4 ------------------------------------
 buildTransitive :: Graph -> Graph
+buildTransitive [] = []
 buildTransitive gr = map buildRes (map (allWays gr) (allNodes gr))
 
 -- Task 5 ------------------------------------
 longWay :: Graph -> Int -> Int -> Maybe [Int]
+longWay [] _ _ = Nothing
+longWay [[]] _ _ = Nothing
 longWay graph from to
   | null (suitableWays graph from to) = Nothing
   | null (head (suitableWays graph from to)) = Nothing
@@ -46,6 +49,8 @@ longWay graph from to
 
 -- Task 6 ------------------------------------
 gamiltonWay :: Graph -> Maybe [Int]
+gamiltonWay [] = Just []
+gamiltonWay [[]] = Just []
 gamiltonWay graph
   | null (findGamiltonWay graph) = Nothing
   | null (head (findGamiltonWay graph)) = Nothing
@@ -53,6 +58,8 @@ gamiltonWay graph
 
 -- Task 7 ------------------------------------
 isAcyclic :: Graph -> Bool
+isAcyclic [] = True
+isAcyclic [[]] = True
 isAcyclic graph =
   null
     [ way
@@ -64,8 +71,8 @@ isAcyclic graph =
 
 -- Task 8 ------------------------------------
 topolSort :: Graph -> Maybe [Int]
-topolSort [] = Nothing
-topolSort [[]] = Nothing
+topolSort [] = Just []
+topolSort [[]] = Just []
 topolSort graph
   | not (isAcyclic graph) = Nothing
   | otherwise =
@@ -77,8 +84,7 @@ topolSort graph
 
 -- Task 9 ------------------------------------
 isTopolSort :: Graph -> [Int] -> Bool
-isTopolSort [] [] = False
-isTopolSort [[]] [] = False
+isTopolSort [] [] = True
 isTopolSort graph topSort
   | not (isAcyclic graph) = False
   | otherwise = topSort `elem` topolSortAll graph

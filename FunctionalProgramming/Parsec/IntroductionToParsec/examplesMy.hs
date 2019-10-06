@@ -42,11 +42,25 @@ myPairs :: Parsec.Parsec String () [(String, String)]
 myPairs =
   Parsec.many $ do
     pair <- myParser
-    mySeparator
+    Parsec.choice [Parsec.eof, mySeparator]
     return pair
 
+-- myPairs =
+--   Parsec.many $ do
+--     pair <- myParser
+--     mySeparator
+--     return pair
 myPairs2a :: Parsec.Parsec String () [(String, String)]
 myPairs2a = Parsec.endBy myParser mySeparator
 
 myPairs2b :: Parsec.Parsec String () [(String, String)]
-myPairs2a = Parsec.sepBy myParser mySeparator
+myPairs2b = Parsec.sepBy myParser mySeparator
+
+helloOrHowdy :: Parsec.Parsec String () String
+helloOrHowdy = do
+  first <- Parsec.char 'h'
+  second <- Parsec.string "ello" <|> Parsec.string "owdy"
+  return (first : second)
+
+helloOrHowdy2 :: Parsec.Parsec String () String
+helloOrHowdy2 = Parsec.try (Parsec.string "hello") <|> Parsec.string "howdy"

@@ -28,9 +28,9 @@ cumSumPrefix xs = map sumM (allPrefix xs)
 diff :: [Int] -> [Int] -> [Int]
 diff [] [] = []
 diff xs [] = xs
-diff [] ys = []
+diff [] _ = []
 diff xs ys = [x | x <- xs, x `notElem` ys]
 
 minFree :: [Int] -> Int
-minFree [] = []
+minFree [] = 0
 minFree xs = (head . (diff [0 ..])) xs
