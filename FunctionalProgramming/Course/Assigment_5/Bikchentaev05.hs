@@ -4,11 +4,6 @@ module Bikchentaev05 where
 
 import Control.Monad
 
-data BinTree a
-  = ALeaf a
-  | ABranch (BinTree a) (BinTree a) (BinTree a)
-  deriving (Eq, Show)
-
 type Graph = [[Int]]
 
 -- Task 1 ------------------------------------------
@@ -46,32 +41,43 @@ allMaxSeq list =
 
 -- Task 6 -----------------------------------------
 genExpr :: Int -> Int -> [String]
-genExpr number result =
-  convertRPN $
-  head $
-  set
-    [ expr
-    | operationSet <- operationSets
-    , expr <- insertOperationSet numberStr operationSet
-    , (solveRPN expr) == result
-    ]
-  where
-    numberStr = show number
-    operationSets = generateOperationSets numberStr
+genExpr number result = convertRPN $ head $ allExpr number result
 
 -- Task 7 -----------------------------------------
 genExprBracket :: Int -> Int -> [String]
-genExprBracket = undefined
+genExprBracket number result = answerReady
+  where
+    answerRaw = map convertRPNWithBrackets (allExpr number result)
+    answerReady = map head answerRaw
 
 -- Task 8 -----------------------------------------
 topolSortAll :: Graph -> [[Int]]
-topolSortAll = undefined
+topolSortAll [] = []
+topolSortAll [[]] = [[]]
+topolSortAll graph
+  | not (isAcyclic graph) = []
+  | otherwise =
+    [ sort
+    | sort <- change [0 .. ((length graph) - 1)]
+    , isTopolSort (allPrefixes sort) graph
+    ]
 
 --------------------------------------------
 gr1 :: Graph
 gr1 = [[1, 2, 3], [], [3, 4], [4], []]
 
 -- Helpers -----------------------------------------
+isTopolSort :: [[Int]] -> [[Int]] -> Bool
+isTopolSort prefixes graph =
+  and [isValidPrefix (head prefix) (tail prefix) graph | prefix <- prefixes]
+
+isValidPrefix :: Int -> [Int] -> [[Int]] -> Bool
+isValidPrefix _ [] _ = True
+isValidPrefix fstNode (node:prefix) graph
+  | edgeExists fstNode node graph = True && (isValidPrefix fstNode prefix graph)
+  | otherwise =
+    not (edgeExists node fstNode graph) && (isValidPrefix fstNode prefix graph)
+
 nLengthNumbers :: Int -> [String]
 nLengthNumbers 0 = []
 nLengthNumbers n =
@@ -170,3 +176,63 @@ convertRPN = foldl foldingFunction [] . stringToListOfStrings
     foldingFunction (x:y:ys) "+" = (y ++ "+" ++ x) : ys
     foldingFunction (x:y:ys) "-" = (y ++ "-" ++ x) : ys
     foldingFunction xs numberString = numberString : xs
+
+convertRPNWithBrackets :: String -> [String]
+convertRPNWithBrackets = foldl foldingFunction [] . stringToListOfStrings
+  where
+    foldingFunction (x:y:ys) "*" = ("(" ++ y ++ "*" ++ x ++ ")") : ys
+    foldingFunction (x:y:ys) "+" = ("(" ++ y ++ "+" ++ x ++ ")") : ys
+    foldingFunction (x:y:ys) "-" = ("(" ++ y ++ "-" ++ x ++ ")") : ys
+    foldingFunction xs numberString = numberString : xs
+
+change :: [a] -> [[a]]
+change [] = [[]]
+change (x:xs) = concat (map (insert x) (change xs))
+
+allExpr :: Int -> Int -> [String]
+allExpr number result =
+  set
+    [ expr
+    | operationSet <- operationSets
+    , expr <- insertOperationSet numberStr operationSet
+    , (solveRPN expr) == result
+    ]
+  where
+    numberStr = show number
+    operationSets = generateOperationSets numberStr
+
+edgeExists :: Int -> Int -> [[Int]] -> Bool
+edgeExists nodeStart nodeEnd graph = nodeEnd `elem` (graph !! nodeStart)
+
+allPrefixes :: [Int] -> [[Int]]
+allPrefixes [] = []
+allPrefixes xs = [pref | i <- [0 .. (length xs) - 1], let pref = drop i xs]
+
+isAcyclic :: Graph -> Bool
+isAcyclic [] = True
+isAcyclic [[]] = True
+isAcyclic graph =
+  null
+    [ way
+    | node <- allNodes graph
+    , ways <- allWays graph node
+    , way <- ways
+    , way /= [] && (length way >= 2) && ((head way) == (last way))
+    ]
+
+allNodes :: Graph -> [Int]
+allNodes graph = [0 .. ((length graph) - 1)]
+
+allEdges :: Graph -> [(Int, Int)]
+allEdges graph = [(x, y) | x <- (allNodes graph), y <- graph !! x]
+
+allWays :: Graph -> Int -> [[[Int]]]
+allWays graph vertex = until condW (stepW graph) [[[vertex]]]
+
+condW :: ([[[Int]]]) -> Bool
+condW wss = null (head wss)
+
+stepW :: Graph -> [[[Int]]] -> [[[Int]]]
+stepW _ [] = error "allWays:stepW"
+stepW graph wss@(wsn:_) =
+  [t : w | w@(v:vs) <- wsn, notElem v vs, t <- graph !! v] : wss

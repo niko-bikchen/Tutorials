@@ -337,3 +337,11 @@ instance Eq a => Eq (Branch a) where
 data Branch a = Leaf a | Fork (Branch a) (Branch a) deriving (Eq, Ord, Show)
 ```
 
+# 8 October 2019
+
+# Monads, Applicatives, Functors, etc.
+
+## Functor
+
+## Applicative
+
