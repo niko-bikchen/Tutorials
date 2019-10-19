@@ -40,11 +40,11 @@ allMaxSeq list =
     lenMax = maxLen list
 
 -- Task 6 -----------------------------------------
-genExpr :: Int -> Int -> [String]
+genExpr :: Int -> Float -> [String]
 genExpr number result = convertRPN $ head $ allExpr number result
 
 -- Task 7 -----------------------------------------
-genExprBracket :: Int -> Int -> [String]
+genExprBracket :: Int -> Float -> [String]
 genExprBracket number result = answerReady
   where
     answerRaw = map convertRPNWithBrackets (allExpr number result)
@@ -94,7 +94,9 @@ extend n start =
     ]
 
 isLucky :: String -> Bool
-isLucky numStr = sum fstHalf == sum sndHalf
+isLucky numStr =
+  ((length numStr) `mod` 2) == 0 &&
+  sum fstHalf == sum sndHalf && (head numStr /= '0')
   where
     numLen = length numStr
     fstHalf = [fromChrToInt numChr | numChr <- take (numLen `div` 2) numStr]
@@ -142,7 +144,7 @@ permit 0 _ = [[]]
 permit n st = [x : y | x <- st, y <- permit (n - 1) st]
 
 generateOperationSets :: String -> [String]
-generateOperationSets num = permit (numLen - 1) "+-*"
+generateOperationSets num = permit (numLen - 1) "+-*/"
   where
     numLen = length num
 
@@ -158,12 +160,13 @@ insertionHelper numbers (operation:operations) =
     [item | array <- map (insert operation) numbers, item <- array]
     operations
 
-solveRPN :: (Num a, Read a) => String -> a
+solveRPN :: String -> Float
 solveRPN = head . foldl foldingFunction [] . stringToListOfStrings
   where
     foldingFunction (x:y:ys) "*" = (x * y) : ys
     foldingFunction (x:y:ys) "+" = (x + y) : ys
     foldingFunction (x:y:ys) "-" = (y - x) : ys
+    foldingFunction (x:y:ys) "/" = (y / x) : ys
     foldingFunction xs numberString = read numberString : xs
 
 stringToListOfStrings :: String -> [String]
@@ -175,6 +178,7 @@ convertRPN = foldl foldingFunction [] . stringToListOfStrings
     foldingFunction (x:y:ys) "*" = (y ++ "*" ++ x) : ys
     foldingFunction (x:y:ys) "+" = (y ++ "+" ++ x) : ys
     foldingFunction (x:y:ys) "-" = (y ++ "-" ++ x) : ys
+    foldingFunction (x:y:ys) "/" = (y ++ "/" ++ x) : ys
     foldingFunction xs numberString = numberString : xs
 
 convertRPNWithBrackets :: String -> [String]
@@ -183,13 +187,14 @@ convertRPNWithBrackets = foldl foldingFunction [] . stringToListOfStrings
     foldingFunction (x:y:ys) "*" = ("(" ++ y ++ "*" ++ x ++ ")") : ys
     foldingFunction (x:y:ys) "+" = ("(" ++ y ++ "+" ++ x ++ ")") : ys
     foldingFunction (x:y:ys) "-" = ("(" ++ y ++ "-" ++ x ++ ")") : ys
+    foldingFunction (x:y:ys) "/" = ("(" ++ y ++ "/" ++ x ++ ")") : ys
     foldingFunction xs numberString = numberString : xs
 
 change :: [a] -> [[a]]
 change [] = [[]]
 change (x:xs) = concat (map (insert x) (change xs))
 
-allExpr :: Int -> Int -> [String]
+allExpr :: Int -> Float -> [String]
 allExpr number result =
   set
     [ expr

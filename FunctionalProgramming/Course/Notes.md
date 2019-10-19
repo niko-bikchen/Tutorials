@@ -112,7 +112,7 @@ type Point a = (a, a)
 
 ## data keyword
 
-`` `data Shape = Ellipse Float Float | Square Float | Poligon [(Float, Float)]` ``
+` `  ` data Shape = Ellipse Float Float | Square Float | Poligon [(Float, Float)] `  ` ` 
 
 *Every data constructor is a function*
 
@@ -166,7 +166,7 @@ safeDiv :: Int -> Int -> Maybe Int
 safeDiv _ 0 = Nothing
 safeDiv a b 
 
-            | a `` `mod` ` ` b == 0 = Just $ a ` ``div
+            | a ` `  ` mod `  `  ` b == 0 = Just $ a ` ` `div
 
 ``` b
             | otherwise = Nothing
@@ -183,7 +183,7 @@ safeDivUltimate :: Int -> Int -> Either String Int
 safeDivUltimate _ 0 = Left "Cannot divide by 0"
 safeDivUltimate a b
 
-                    | a `` `mod` ` ` b = Right $ a ` ` `div` `` b
+                    | a ` `  ` mod `  `  ` b = Right $ a `  `  ` div `  ` ` b
                     | otherwise = Left "Second argument is not a divisor of the first argument"
 
 ```
@@ -224,17 +224,19 @@ pt = Point 5.0 6.0
 
 ``` 
 abs :: Point -> Float
-abs (Point x y) = sqrt $ `` `x*x + y*y` ``
+abs (Point x y) = sqrt $ ` `  ` x*x + y*y `  ` ` 
 ```
 
 ## Using record syntax to init data Point
 
 data Point = Point {
+
     px :: Float,
     py :: Float
+
 }
 
-*px and py are "getters" (i.e. functions) automatically created to get Point fields*
+*px and py are "getters" (i.e.functions) automatically created to get Point fields*
 
 ``` 
 abs p = sqrt $ px p * px p + py p * py p
@@ -276,6 +278,7 @@ b = Orange 10
 
 a + b -- Works fine
 ```
+
 *Newtype works like data but has less functionality, like it only allows one constructor*
 
 # 1 October 2019
@@ -284,19 +287,19 @@ a + b -- Works fine
 
 ## Declaring a type class
 
-```
+``` 
 class Name a where
     f1 :: y1 -> ...
     f2 :: y2 -> ...
 ```
 
-```
+``` 
 instance Name Who where
     f1 :: y1 -> ...
     -- implement all functions
 ```
 
-```
+``` 
 class Eq a where
     (==) :: a -> a -> Bool
     (/=) :: a -> a -> Bool
@@ -304,18 +307,18 @@ class Eq a where
     x /= y = not (x == y)
 ```
 
-```
+``` 
 instance Eq a => Eq [a] where
     [] == [] = True
     (x:xs) == (y:ys) = (x==y) && (xs == ys)
     _ == _ = False
 ```
 
-```
+``` 
 class Ordering = LT | EQ | GT
 ```
 
-```
+``` 
 class Eq a => Ord a where
     compare :: a -> a -> Ordering
     (<), (<=), (>), (>=) :: a -> a -> Bool
@@ -324,7 +327,7 @@ class Eq a => Ord a where
 compare x y = if x == y then EQ else if x <= y then LT else GT
 ```
 
-```
+``` 
 data Branch a = Leaf a | Fork (Branch a) (Branch a)
 
 instance Eq a => Eq (Branch a) where
@@ -344,4 +347,72 @@ data Branch a = Leaf a | Fork (Branch a) (Branch a) deriving (Eq, Ord, Show)
 ## Functor
 
 ## Applicative
+
+# 15 October 2019
+
+# Introcuction to Monads
+
+``` 
+f1 :: [a] -> [b] -> [Bool]
+f2 :: f a -> f b -> f Bool
+```
+
+``` 
+toInt :: String -> Maybe Int
+toInt s 
+    | all (isDigit s) = Just $ read s
+    | otherwise = Nothing
+
+addTwo :: String -> Maybe Int
+addTwo s = (+2) <$> (toInt s)
+
+addTwoIO :: IO (Maybe Int)
+addTwoIO = addTwo <$> getLine
+
+addS :: String -> String -> Maybe Int
+addS s1 s2 = 
+    (+) <$> (toInt s1) <*> (toInt s2)
+
+addSIO :: IO (Maybe Int)
+addSIO = addS <$> getLine <*> getLine
+```
+
+``` 
+data Person = Person String deriving (Show)
+
+mother, father :: Person -> Maybe Person
+mf, mff :: Person -> Maybe Person
+mf p = case mother p of
+        Nothing -> Nothing
+        Just m -> case father m of
+                    Nothing -> Nothing
+                    Just mf -> father mf
+
+-- Looks bad cuz its will become longer every time we find a new father
+-- We can use combinator
+
+comb :: a -> (a -> Maybe) -> Maybe a
+comb Nothing f = Nothing
+comb (Just a) f = f a
+
+mf p = ((Just p) `comb` mother) `comb` father
+mff p = (((Just p) `comb` mother) `comb` father) `comb` father
+```
+
+``` 
+instance Monad Maybe where
+    return x = Just x
+    Nothing f = Nothing
+    (Just x) f = f x
+
+mf p = (return p) >>= mother >>= father ... >>= father
+```
+
+``` 
+addSIO :: IO ()
+addSIO = addS <$> getLine <*> getLine >>= print
+
+print :: a -> IO ()
+print x = putStrLn (show x)
+```
 
