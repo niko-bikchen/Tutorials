@@ -512,3 +512,73 @@ fmRandom = do
                 m <- state (randomR (-n, n))
                 return (MT n b c m, g4)
 ```
+
+# 11 November 2019
+
+## MonadPlus
+
+```
+class (Alternative m, Monad m) => Monad Plus m where
+    mzero :: ma
+    mplus :: ma -> ma -> ma
+```
+
+```
+mzero = mepmty
+mplus = (<|>)
+```
+
+## Monad types
+
+## List monads
+
+```
+instance Monad [] where
+    return x = [x]
+    -- (>>=) :: [a] -> (a -> [b]) -> [b]
+    xs >>= f = concat (map f xs)
+```
+
+**Example**
+
+```
+[2, 3, 7] >>= (\x -> [-x, x]) = concat (map (\x -> [-x, x]) [2, 3, 7])
+-- Result
+[-2, 2, -3, 3, -7, 7]
+```
+
+```
+listT :: [(Int, Char)]
+listT = do
+            n <- [1, 2]
+            c <- ['a', 'b']
+            return (n, c)
+listT = [1, 2] >>= (\n -> ['a', 'b']) >>= (\c -> return (n, c))
+listT = [(n, c) | n <- [1, 2], c <- ['a', 'b']]
+```
+
+## Guard function
+
+```
+guard :: (MonadPlus m) => Bool -> m ()
+guard True = return ()
+guard False = mzero
+```
+
+## Haskell ecosystem
+
+- Hoogle - Search Haskell stuff
+- Hackage - Haskell module library
+- Stack - Haskell bundler
+- Cabal - Haskell module manager
+  - `cabal update`
+  - `cabal install <module name>`
+- QuickCheck
+
+Stuff made with Haskell:
+
+- Yi
+- Darcs
+- Euterpea
+- HSoM (Book on Euterpea)
+- Qnipper (Has smt to do with Haskell)
