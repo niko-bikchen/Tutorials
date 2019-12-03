@@ -2,7 +2,7 @@
 
 module Bikchentaev11 where
 
-import Data.Char (isLower)
+import Data.Char (isLetter, isLower)
 
 data BExp
   = Bvalue Bool
@@ -20,58 +20,156 @@ type BDDNode = (NodeId, (Char, NodeId, NodeId))
 
 type BDD = (NodeId, [BDDNode])
 
--- ������ 1 -----------------------------------------
+-- Task 1 -----------------------------------------
 checkSat :: BDD -> Env -> Bool
-checkSat = undefined
+checkSat (node_id, nodes) env = checkSat' (node_id, (findVal node_id nodes))
+  where
+    checkSat' (0, _) = False
+    checkSat' (1, _) = True
+    checkSat' (_, (var_name, l, r))
+      | findVal var_name env = checkSat' (r, (findVal r nodes))
+      | otherwise = checkSat' (l, (findVal l nodes))
 
--- ������ 2 -----------------------------------------
+findVal :: Eq a => a -> [(a, b)] -> b
+findVal key tups = snd $ head $ filter (\(a, _) -> a == key) tups
+
+-- Task 2 -----------------------------------------
 sat :: BDD -> [[(Char, Bool)]]
-sat = undefined
+sat (node_id, nodes) = sat' (node_id, (findVal node_id nodes)) []
+  where
+    sat' (0, _) _ = []
+    sat' (1, _) aggregator = [aggregator]
+    sat' (_, (var_name, l, r)) aggregator =
+      sat' (l, (findVal l nodes)) ((var_name, False) : aggregator) ++
+      sat' (r, (findVal r nodes)) ((var_name, True) : aggregator)
 
--- ������ 3 -----------------------------------------
+-- Task 3 -----------------------------------------
 simplify :: BExp -> BExp
-simplify = undefined
+simplify (Not (Bvalue b)) = Bvalue (not b)
+simplify (Or (Bvalue a) (Bvalue b)) = Bvalue (a || b)
+simplify (And (Bvalue a) (Bvalue b)) = Bvalue (a && b)
+simplify a = a
 
--- ������ 4 -----------------------------------------
+-- Task 4 -----------------------------------------
 restrict :: BExp -> Char -> Bool -> BExp
-restrict = undefined
+restrict expr@(Bvar var) var_name bool_const
+  | var == var_name = Bvalue bool_const
+  | otherwise = expr
+restrict expr@(Bvalue _) _ _ = expr
+restrict (Not expr) var_name bool_const =
+  simplify (Not $ restrict expr var_name bool_const)
+restrict (Or expr1 expr2) var_name bool_const =
+  simplify
+    (Or
+       (restrict expr1 var_name bool_const)
+       (restrict expr2 var_name bool_const))
+restrict (And expr1 expr2) var_name bool_const =
+  simplify
+    (And
+       (restrict expr1 var_name bool_const)
+       (restrict expr2 var_name bool_const))
 
--- ������ 5 -----------------------------------------
--- ����������: ����� ����� (�����) � �������� ����� (BExp) �"��������� 
---    ����� ���� ��� � ������ ������ (Char); ���� ����� ��������
+-- Task 5 -----------------------------------------
 buildBDD :: BExp -> [Char] -> BDD
 buildBDD e xs = buildBDD' e 2 xs
 
 buildBDD' :: BExp -> NodeId -> [Char] -> BDD
-buildBDD' = undefined
+buildBDD' expr _ []
+  | expr == Bvalue True = (1, [])
+  | expr == Bvalue False = (0, [])
+buildBDD' expr node_id (var:vars) = (node_id, currentNode : lt ++ rt)
+  where
+    (l, lt) = buildBDD' (restrict expr var False) (2 * node_id) vars
+    (r, rt) = buildBDD' (restrict expr var True) (2 * node_id + 1) vars
+    currentNode = (node_id, (var, l, r))
 
--- ������ 6 -----------------------------------------
--- ����������: ����� ����� (�����) � �������� ����� (BExp) �"��������� 
---    ����� ���� ��� � ������ ������ (Char); ���� ����� ��������
+-- Task 6 -----------------------------------------
 buildROBDD :: BExp -> [Char] -> BDD
-buildROBDD = undefined
+buildROBDD e xs = buildROBDD' e 2 xs []
 
--- ������ 7 -----------------------------------------
+buildROBDD' :: BExp -> NodeId -> [Char] -> [BDDNode] -> BDD
+buildROBDD' (Bvalue b) _ _ nodes = (fromEnum b, nodes)
+buildROBDD' expr node_id (var:vars) nodes
+  | l == r = (l, lt)
+  | otherwise =
+    maybe
+      (node_id, (node_id, (var, l, r)) : rt)
+      (\n -> (n, rt))
+      (revLookUp (var, l, r) rt)
+  where
+    currentNode1 = restrict expr var False
+    currentNode2 = restrict expr var True
+    (l, lt) = buildROBDD' currentNode1 (2 * node_id) vars nodes
+    (r, rt) = buildROBDD' currentNode2 (2 * node_id + 1) vars lt
+
+revLookUp :: Eq a => a -> [(b, a)] -> Maybe b
+revLookUp i t = lookup i [(v, k) | (k, v) <- t]
+
+-- Task 7 -----------------------------------------
 fullBexp :: String -> Maybe BExp
-fullBexp = undefined
+fullBexp str =
+  case bexp str of
+    Just (expr, stringo) ->
+      if stringo == ""
+        then Just expr
+        else Nothing
+    _ -> Nothing
 
 bexp :: String -> Maybe (BExp, String)
-bexp = undefined
+bexp str =
+  case bcon str of
+    Just (expr, rest) -> manyCon (expr, rest)
+    _ -> Nothing
 
 bcon :: String -> Maybe (BExp, String)
-bcon = undefined
+bcon str =
+  case bdis str of
+    Just (expr, rest) -> manyDis (expr, rest)
+    _ -> Nothing
 
 manyCon :: (BExp, String) -> Maybe (BExp, String)
-manyCon = undefined
+manyCon (expres, sym:str) =
+  case sym of
+    '|' ->
+      case bcon str of
+        Just (expr, rest) -> manyCon (Or expres expr, rest)
+        _ -> Nothing
+    _ -> Just (expres, sym : str)
+manyCon (expres, "") = Just (expres, "")
 
 bdis :: String -> Maybe (BExp, String)
-bdis = undefined
+bdis [] = Nothing
+bdis (sym:str) =
+  case bsym sym of
+    True -> Just (Bvar sym, str)
+    False ->
+      case sym of
+        '(' ->
+          case bexp str of
+            Just (expr, ')':rest) -> Just (expr, rest)
+            _ -> Nothing
+        '!' ->
+          case bdis str of
+            Just (expr, rest) -> Just (Not expr, rest)
+            _ -> Nothing
+        'T' -> Just (Bvalue True, str)
+        'F' -> Just (Bvalue False, str)
+        _ -> Nothing
 
 manyDis :: (BExp, String) -> Maybe (BExp, String)
-manyDis = undefined
+manyDis (expres, sym:str) =
+  case sym of
+    '&' ->
+      case bdis str of
+        Just (expr, rest) -> manyDis (And expres expr, rest)
+        _ -> Nothing
+    _ -> Just (expres, sym : str)
+manyDis (expres, "") = Just (expres, "")
+
+bsym :: Char -> Bool
+bsym sym = (isLetter sym) && (isLower sym)
 
 ------------------------------------------------------
--- �������� ��� ����������..
 bs1, bs2, bs3, bs4, bs5, bs6, bs7, bs8, bs9 :: String
 bs1 = "F"
 
