@@ -1,0 +1,20 @@
+.Pokepic {
+    text-align: center;
+    margin: 15px 15px;
+    padding: 10px;
+
+    border-radius: 5px;
+
+    background-color: white;
+}
+
+.Pokepic-img {
+    width: 100px;
+    height: auto;
+
+    transition: all ease-in 0.2s;
+}
+
+.Pokepic-img:hover {
+    transform: scale(1.25);
+}

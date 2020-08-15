@@ -1,0 +1,9 @@
+.Pokestats {
+    text-align: center;
+}
+
+.Pokestats-PokestatsList {
+    padding-left: 0;
+    
+    list-style-type: none;
+}
