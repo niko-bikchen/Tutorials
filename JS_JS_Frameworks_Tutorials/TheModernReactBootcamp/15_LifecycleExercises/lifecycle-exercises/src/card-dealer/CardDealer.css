@@ -1,0 +1,53 @@
+.CardDealer {
+    width           : 100%;
+    height          : 100vh;
+    padding         : 10px 0;
+    text-align      : center;
+    color           : white;
+    background-color: #000000;
+}
+
+.CardDealer-title {
+    margin: 0;
+}
+
+.CardDealer-deckWrapper {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+}
+
+.CardDealer-deck {
+    display        : flex;
+    align-items    : center;
+    justify-content: center;
+    position       : relative;
+    height         : 350px;
+    width          : 300px;
+    margin         : 90px 0;
+}
+
+.CardDealer-button,
+.CardDealer-buttonDisabled {
+    padding         : 10px;
+    font-size       : larger;
+    color           : white;
+    background-color: transparent;
+    border          : 2px solid rgb(11, 121, 224);
+    outline         : none;
+    cursor          : pointer;
+}
+
+.CardDealer-buttonDisabled {
+    border: 2px solid rgb(250, 14, 14);
+    cursor: not-allowed;
+}
+
+.CardDealer-button:hover,
+.CardDealer-buttonDisabled:hover {
+    border-style: dashed;
+}
+
+.CardDealer-button:active {
+    border-color: rgb(16, 219, 219);
+}

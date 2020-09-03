@@ -1,0 +1,26 @@
+.VendingMachine-content {
+    display        : flex;
+    justify-content: center;
+}
+
+.VendingMachine-menu {
+    display       : flex;
+    flex-direction: column;
+    align-items   : center;
+}
+
+.VendingMachine-menu .menu-item {
+    width           : 200px;
+    margin          : 10px 0;
+    padding         : 10px;
+    text-decoration : none;
+    font-weight     : bold;
+    color           : white;
+    border-radius   : 10px;
+    background-color: tomato;
+}
+
+.VendingMachine-picture img {
+    width : 90%;
+    height: auto;
+}

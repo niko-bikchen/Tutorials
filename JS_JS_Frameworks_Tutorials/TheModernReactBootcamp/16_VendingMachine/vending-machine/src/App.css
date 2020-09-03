@@ -1,0 +1,39 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  display        : flex;
+  justify-content: space-evenly;
+  margin-bottom  : 35px;
+  padding        : 20px;
+  border-bottom  : 1px dashed tomato;
+}
+
+.App-header .header-item {
+  text-decoration: none;
+  font-weight    : bold;
+  color          : tomato;
+}
+
+.App-header .header-item:hover {
+  text-decoration: underline;
+}
+
+.App-header .active-nav-item {
+  position: relative;
+  color   : green;
+}
+
+.App-header .active-nav-item::before {
+  content : "👉";
+  position: absolute;
+  left    : -25px;
+  bottom  : 2px;
+}
+
+.link-to-home {
+  text-decoration: none;
+  font-weight    : bold;
+  color          : tomato;
+}
