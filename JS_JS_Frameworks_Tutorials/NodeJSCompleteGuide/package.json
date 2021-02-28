@@ -1,0 +1,15 @@
+{
+  "name": "nodejscompleteguide",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Code from the course on Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nikolay",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.14.31"
+  }
+}
