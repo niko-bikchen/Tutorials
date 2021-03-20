@@ -4,13 +4,17 @@ import Navbar from './Navbar';
 import Form from './Form';
 import PageContent from './PageContent';
 
+import { ThemeProvider } from './contexts/ThemeContext';
+
 class App extends Component {
   render() {
     return (
-      <PageContent>
-        <Navbar />
-        <Form />
-      </PageContent>
+      <ThemeProvider>
+        <PageContent>
+          <Navbar />
+          <Form />
+        </PageContent>
+      </ThemeProvider>
     );
   }
 }
