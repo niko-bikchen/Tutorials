@@ -2,10 +2,21 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+// const expressHbs = require('express-handlebars');
 
 const app = express();
 
-app.set('view engine', 'pug');
+// Registering the Handlebars templating engine.
+// app.engine(
+//   'hbs',
+//   expressHbs({
+//     extname: 'hbs',
+//     layoutsDir: 'views/layouts',
+//     defaultLayout: 'main-layout'
+//   })
+// );
+
+app.set('view engine', 'ejs');
 app.set('views', 'views');
 
 const adminData = require('./routes/admin');
